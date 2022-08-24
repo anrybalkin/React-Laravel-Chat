@@ -1,0 +1,55 @@
+@import './variables';
+.users {
+    background-color: $chat-block;
+    position: relative;
+    &-container {
+        width: 30%;
+        border-right: 1px solid $splitter;
+    }
+    &-block {
+        height: calc(100% - 60px);
+        background-color: $chat-block;
+        overflow: hidden;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    &-title {
+        color: $color-headline-users;
+        padding-bottom: 40px;
+        padding-top: 20px;
+    }
+    height: calc(100% - 60px);
+    .user {
+ 
+        display: flex;
+        cursor: pointer;
+        justify-content: space-between;
+        &-last-date {
+            justify-self: flex-end;
+            font-size: 14px;
+            width: 90px;
+        }
+        &-main-data {
+            display: flex;
+            gap: 10px;
+        }
+        &-text-data {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        &-last-msg {
+            opacity: 0.5;
+        }
+        &-main-data{
+            width: calc(100% - 90px);
+        }
+        &-container
+        {
+            position: absolute;
+            width: 100%;
+        }
+    }
+
+}

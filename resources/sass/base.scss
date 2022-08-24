@@ -1,0 +1,73 @@
+// Fonts
+@import url( 'https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    background-color: $main-color;
+    min-height: 100%;
+    height: 100%;
+}
+
+* html #root {
+    height: 100%;
+}
+
+
+.avatar-block {
+    @extend %avatar-block;
+
+}
+
+.avatar-img{
+    @extend %avatar-img
+}
+
+.splitter
+{
+    background-color:$splitter;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-scrollbars__content {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .custom-scrollbars__content::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbars__track-and-thumb {
+    display: block;
+    height: 100%;  /* must have some height */
+    position: relative;
+    width: 16px; /* must have some width */
+  }
+
+  .custom-scrollbars__thumb {
+    position: absolute;
+    width: 16px; /* must have some width */
+  }

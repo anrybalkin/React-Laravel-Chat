@@ -1,0 +1,97 @@
+@import './variables';
+
+.chatapp-container {
+    display: flex;
+    border-bottom: 1px solid $splitter;;
+    .chat-block {
+        width: 70%;
+
+    }
+
+    .messages {
+        padding: 20px;
+        background-color: $chat-block;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        &.reverce
+        {
+            flex-direction: column-reverse;
+        }
+        .no-msg
+        {
+            justify-self: flex-end;
+            font-style: italic;
+            opacity: 0.5;
+        }
+    }
+
+    .reciever {
+        padding: 0 0 20px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .message {
+        transition: all 0.5 linear;
+        &.left {
+            align-self: start;
+            width: fit-content;
+            color: $color-msg-to-you;
+            .message-text {
+                background-color: $msg-to-you;
+            }
+            .message-date{padding-left: 70px;
+                padding-top: 10px;}
+            
+        }
+        &.right {
+            align-self: end;
+            width: fit-content;
+            .message-text {
+                background-color: $msg-yours;
+            }
+        }
+        &-text {
+            padding: 10px;
+            border-radius: 20px;
+            height: fit-content;
+        }
+        &-date {
+            color: $color-msg-yours;
+        }
+
+        &-send {
+            max-height: 200px;
+            min-height: 50px;
+        }
+        &-body {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: end;
+        }
+        &-area {
+            @extend %input;
+            padding: 10px 10px 0;
+        }
+        &-form {
+            position: relative;
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        &-submit {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(0,-50%);
+            width: 30px;
+            height: 30px;
+            border: none;
+            outline: none;
+            background: none;
+            opacity: 0.8;
+        }
+
+    }
+}

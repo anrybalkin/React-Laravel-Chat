@@ -1,0 +1,67 @@
+@import "./variables";
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.search {
+    &-input {
+        @extend %input;
+        padding: 10px 0 10px 40px;
+    }
+    &-panel {
+        position: relative;
+        width: 90%;
+        padding: 20px 20px 20px 5px;
+    }
+    &-submit {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translate(0,-50%);
+        width: 30px;
+        height: 30px;
+        border: none;
+        outline: none;
+        background: none;
+        opacity: 0.8;
+    }
+    &-result{
+        display: none;
+        position: absolute;
+        top: 0;right: 0;
+        transform: translate(15px, 60px);
+        z-index: 5;
+        background-color: $chat-block;
+        border-radius: 10px;
+        max-height: 200px;
+        overflow: scroll;
+
+    &.visible
+    {
+        display: block;
+    }
+    }
+    &-options
+    {
+        list-style: none;
+        border-radius: 10px;
+
+    }
+    &-option
+    {
+        border-bottom: 1px solid black;
+        cursor: pointer;
+        padding: 10px;
+
+    }
+    &-option:hover{
+        background-color: #fff;
+    }
+    &-yellow
+    {
+        color: yellow;
+    }
+
+}
