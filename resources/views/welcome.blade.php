@@ -19,8 +19,18 @@
             }
             
         </style>
-        
-        
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId            : '3198188800437862',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v14.0'
+              });
+            };
+          </script>
+          <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
     </head>
     <body class="antialiased">
         <div id="app"></div>

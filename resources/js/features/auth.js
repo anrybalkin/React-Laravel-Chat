@@ -2,7 +2,7 @@ import { read_cookie } from "./lib";
 
 export function isAuth()
 {
-    let auth =read_cookie();
+    let auth =read_cookie("loggedReact");
     if(auth!='')
     {
         auth=JSON.parse(auth);

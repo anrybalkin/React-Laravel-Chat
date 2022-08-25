@@ -72,8 +72,30 @@
         box-shadow: 0 0 5px 0 rgba(226,226,226,255);
         background-color: $color-headline-users;
         color: $users-bgc;
-        cursor:pointer;
-        
+        cursor:pointer;}
+
+    &-meta
+    {
+        width: 38px;
+        height: 38px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: 1 all ease-in-out;
+        img{
+            width: 38px;
+        height: 38px;
+            object-fit: contain;
+            object-position: center;
         }
+    }
+    &-meta:hover{
+        transition: 1 all ease-in-out;
+        -webkit-box-shadow: 0 0 5px 0 rgba(37, 86, 164,255);
+        -moz-box-shadow: 0 0 5px 0 rgba(37, 86, 164,255);
+        box-shadow: 0 0 5px 0 rgba(37, 86, 164,255);
+    }
 
 }

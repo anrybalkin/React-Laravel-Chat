@@ -1,5 +1,6 @@
 import store from "./reduxstore";
 
+
 export function FindAntoherUser(chatID, username) {
     let chat = store
         .getState()
@@ -111,45 +112,23 @@ export function notifyMe(text) {
     }
 }
 
-export function add_cookie(data) {
-    document.cookie = "loggedReact=" + JSON.stringify(data) + "; expires=" + new Date(new Date().setDate(30)).toGMTString() + ";"
+export function add_cookie(cname,data) {
+    document.cookie = cname+"=" +  JSON.stringify(data) + "; expires=" + new Date(new Date().setDate(30)).toGMTString() + ";"
+    
 }
 
-export function read_cookie() {
-    return document
-        .cookie
-        .replace(/(?:(?:^|.*;\s*)+loggedReact+\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-}
-
-export function calculateTop(selector,className)
-{
-    let data=[];
-    document.querySelectorAll(className).forEach(element=>{
-        element.className+=" move";
-        data.push( element);
-    })
-
-    if(document.querySelector(selector)!==null)
-    {console.log(document.querySelector(selector));
-        document.querySelector(selector).style.top=0;
-        document.querySelector(selector).className.substring(" move","");
+export function read_cookie(cname) {
+    
+    let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    
-    
-    data=[];
-
-    document.querySelectorAll(className).forEach(element=>{
-        element.className+=" move";
-        data.push( element);
-    })
-
-    for(let i=1;i<data.length;i++)
-    {
-        data[i].style.top=" "+i*80+"px";
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
     }
-
-    data.forEach(element => {
-        element.className.substring(" move","");
-    });
-    
+  }
+  return "";
 }
