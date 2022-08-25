@@ -26,32 +26,9 @@ class Login extends React.Component {
         this.SingUp = this
             .SingUp
             .bind(this);
-        this.statusChangeCallback = this
-            .statusChangeCallback
-            .bind(this);
     }
 
 
-
-statusChangeCallback(response) {
-    switch (response.status) {
-        case "connected":
-            console.log(response.signedRequest);
-            add_cookie({username: "fb", logged: true, activeChat: ""});
-            break;
-        case "not_authorized":
-            break;
-        default:
-           break; }
-    }
-
-    componentDidMount()
-    {
-        FB
-            .getLoginStatus(function (response) {
-                this.statusChangeCallback(response);
-            });
-    }
     Login(e)
     {
         e.preventDefault();
@@ -84,14 +61,6 @@ statusChangeCallback(response) {
                 }, 1000)
             }
         }
-    }
-
-    checkLoginState() {
-        // Called when a person is finished with the Login Button.
-        FB
-            .getLoginStatus(function (response) { // See the onlogin handler
-                this.statusChangeCallback(response);
-            });
     }
 
     SingUp(e)
@@ -201,13 +170,7 @@ statusChangeCallback(response) {
                     <button className="login-button" onClick={this.SingUp}>Sign In</button>
                 </div>
                 <div className="login-buttons">
-                    <div
-                        className="fb-login-button"
-                        data-size="medium"
-                        data-auto-logout-link="true"
-                        data-onlogin={() => {
-                        this.checkLoginState()
-                    }}></div>
+                    
 
                 </div>
             </form>

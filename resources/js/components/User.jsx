@@ -13,7 +13,7 @@ class User extends React.Component
     constructor(props)
     {
         super(props);
-        let cord_y = props.cord_y;
+        let touch = props.touch;
         props = props.props;
         this.state = {
             username: props.username,
@@ -25,7 +25,7 @@ class User extends React.Component
                 .getState()
                 .currentUserStorage
                 .userName,
-            cord_y: cord_y,
+            touch: touch,
             chatID: store
                 .getState()
                 .currentUserStorage
@@ -37,11 +37,6 @@ class User extends React.Component
             .bind(this);
     }
 
-    componentDidUpdate()
-    {
-        calculateTop(".user-container[style='top: " + this.state.cord_y + "px;']");
-        this.state.cord_y = 0;
-    }
     clickHandler(e)
     {
         e.preventDefault();
@@ -52,9 +47,10 @@ class User extends React.Component
                 .chat
                 .filter(el => {
                     if (el.members != undefined) {
-                        return JSON.stringify(el
-                            .members).indexOf(this.state.username) !== -1 && JSON.stringify(el
-                                .members)
+                        return JSON
+                            .stringify(el.members)
+                            .indexOf(this.state.username) !== -1 && JSON
+                            .stringify(el.members)
                             .indexOf(this.state.humanUser) !== -1
                     } else {
                         return false;
@@ -63,16 +59,26 @@ class User extends React.Component
                 })[0]
                 .chatID
         }))
+        if (this.state.touch) {
+            document
+                .querySelector(".users-container")
+                .classList
+                .toggle("hide");
+            document
+                .querySelector(".chat-block")
+                .classList
+                .toggle("hide");
+        }
     }
 
     render()
     {
         let lastMessage = lastMsg(store.getState().chats.chat.filter(el => {
             if (el.members != undefined) {
-                return JSON.stringify(el
-                    .members)
-                    .indexOf(this.state.username) !== -1 && JSON.stringify(el
-                        .members)
+                return JSON
+                    .stringify(el.members)
+                    .indexOf(this.state.username) !== -1 && JSON
+                    .stringify(el.members)
                     .indexOf(this.state.humanUser) !== -1
             } else {
                 return false;
@@ -89,33 +95,34 @@ class User extends React.Component
             "day": "numeric",
             "year": "numeric"
         });
-        return <><div className="user" onClick={this.clickHandler}>
-            <div className="user-main-data"><Avatar
-                props={{
+        return <><div className = "user" onClick = {
+            this.clickHandler
+        } > <div className="user-main-data"><Avatar
+            props={{
             username: this.state.username,
             avatar: this.state.avatar,
             status: this.state.status
         }}/>
-                <div className="user-text-data">
-                    <div className="user-name">
-                        {this.state.fname != "" && this.state.fname != undefined && this.state.lname != "" && this.state.lname != undefined
-                            ? <> <span>{this.state.fname}
-                            </span> < span > {
-                                this.state.lname
-                            } </span></ >
-                            : <> <span>{this.state.username}
-                            </span> </>}
-                    </div>
-                    {!lastMessage == false
-                        ? <div className="user-last-msg">{lastText}</div>
-                        : ""}
+            <div className="user-text-data">
+                <div className="user-name">
+                    {this.state.fname != "" && this.state.fname != undefined && this.state.lname != "" && this.state.lname != undefined
+                        ? <> <span>{this.state.fname}
+                        </span> < span > {
+                            this.state.lname
+                        } </span></>
+                        : <> <span>{this.state.username}
+                        </span> </>}
                 </div>
+                {!lastMessage == false
+                    ? <div className="user-last-msg">{lastText}</div>
+                    : ""}
             </div>
-            {!lastMessage == false
+        </div>
+        {
+            !lastMessage == false
                 ? <div className="user-last-date">{lastDate}</div>
                 : ""
-}
-        </div> < hr className = 'splitter' /> </>
+        } </div> < hr className = 'splitter'/> </>
     }
 
 }

@@ -42,6 +42,9 @@ html {
 
 }
 
+.hide{
+    display: none;
+}
 .avatar-img{
     @extend %avatar-img
 }

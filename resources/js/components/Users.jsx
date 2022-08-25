@@ -69,7 +69,7 @@ class Users extends React.Component
 
             })
             if (user != undefined) {
-                return <User key={user.username} props={user}/>
+                return <User touch={window.innerWidth<1000?true:false} key={user.username} props={user}/>
             }
 
         })
