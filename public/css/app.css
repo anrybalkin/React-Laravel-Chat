@@ -668,23 +668,50 @@ html {
 
 .login-block {
   margin: auto;
-  min-height: 360px;
-  min-width: 360px;
-  max-width: 400px;
-  max-height: 400px;
   border-radius: 20px;
   box-shadow: 0 0 5px 0 rgb(226, 226, 226);
   transform: translate(0, 50%);
   background-color: #e0e0e0;
 }
+@media screen and (min-width: 280px) {
+  .login-block {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .login-block {
+    min-height: 360px;
+    min-width: 360px;
+    max-width: 400px;
+    max-height: 400px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .login-block {
+    min-height: 360px;
+    min-width: 360px;
+    max-width: 400px;
+    max-height: 400px;
+  }
+}
 .login-input {
   padding: 10px;
   margin-top: 10px;
-  width: 80%;
+}
+@media screen and (min-width: 280px) {
+  .login-input {
+    width: 80% !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .login-input {
+    width: 100% !important;
+  }
 }
 .login-form {
   height: 100%;
   width: 80%;
+  padding: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
