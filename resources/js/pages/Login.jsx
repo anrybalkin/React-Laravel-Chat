@@ -174,7 +174,6 @@ class Login extends React.Component {
 
                 </div>
             </form>
-
         </div>
     }
 }

@@ -78,3 +78,16 @@ html {
     position: absolute;
     width: 16px; /* must have some width */
   }
+
+  body{
+
+    @media screen and (min-width:$mobile) {
+        font-size: 12px;
+        select:focus, textarea:focus, input:focus {
+            font-size: 16px;
+        }
+    }
+    @media screen and (min-width:$desktop) {
+        font-size: 18px;
+    }
+  }

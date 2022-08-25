@@ -52,7 +52,7 @@ class CustomScroll extends React.Component
         var touches = evt.changedTouches;
 
         for (var i = 0; i < touches.length; i++) {
-            document.body.scrollTo = touches[i].pageY
+            document.body.scrollTo = Math.floor(touches[i].pageY) 
         }
     }
 
@@ -60,7 +60,7 @@ class CustomScroll extends React.Component
         var touches = evt.changedTouches;
 
         for (var i = 0; i < touches.length; i++) {
-            document.body.scrollTo = touches[i].pageY
+            document.body.scrollTo = Math.floor(touches[i].pageY) 
         }
     }
 
@@ -68,15 +68,15 @@ class CustomScroll extends React.Component
         var touches = evt.changedTouches;
 
         for (var i = 0; i < touches.length; i++) {
-            document.body.scrollTo = touches[i].pageY
+            document.body.scrollTo = Math.floor(touches[i].pageY) 
         }
     }
     componentDidMount()
     {
         document.addEventListener('mousemove', this.onHandleThumbMousemove);
-        document.addEventListener("touchstart", this.onHandleStart, false);
-        document.addEventListener("touchend", this.onHandleEnd, false);
-        document.addEventListener("touchmove", this.onHandleMove, false);
+        document.addEventListener("touchstart", this.onHandleStart,false);
+        document.addEventListener("touchend", this.onHandleEnd,false);
+        document.addEventListener("touchmove", this.onHandleMove,false);
     }
 
     onHandleThumbMousedown(e) {

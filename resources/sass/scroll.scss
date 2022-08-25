@@ -3,6 +3,10 @@
     height: calc(80% - 10px);
     overflow: hidden;
     position: relative;
+    @media screen and (min-width:$mobile) and (max-width:400px){
+      height: calc(79% - 10px);
+
+  }
   }
   &__content {
     height: calc(100% - 20px);

@@ -32,6 +32,13 @@
     &-input {
         @extend %input;
         padding: 10px 0 10px 40px;
+        @media screen and (min-width:$mobile) {
+            width: 80%!important;
+    
+        }
+        @media screen and (min-width:$tablet) {
+            width: 90%!important;
+        }
     }
     &-panel {
         position: relative;

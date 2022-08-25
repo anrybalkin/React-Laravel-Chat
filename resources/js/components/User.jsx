@@ -87,8 +87,9 @@ class User extends React.Component
         let lastText = lastMessage !== ""
             ? lastMessage.text
             : "";
-        lastText = lastText.length > 50
-            ? lastText.substring(0, 47) + "..."
+            let limit=window.innerWidth<1000?40:50; 
+        lastText = lastText.length > limit
+            ? lastText.substring(0, limit-3) + "..."
             : lastText;
         let lastDate = new Date(lastMessage.date).toLocaleString("en", {
             "month": "short",
