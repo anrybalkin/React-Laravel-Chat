@@ -41,7 +41,7 @@ class Chat extends React.Component {
 
             </div>
         } else {
-            return <div className='container-chat'>
+            return <div className='chat-block text-center'>
                 Choose someone to talk
 
             </div>

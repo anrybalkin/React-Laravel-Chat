@@ -2,16 +2,20 @@
 
 .chatapp-container {
     display: flex;
-    border-bottom: 1px solid $splitter;;
+    border-bottom: 1px solid $splitter;
     .chat-block {
         width: 70%;
+        &.text-center
+        {
+            @extend %flex-center;
+            font-style: italic;
 
+        }
     }
 
     .messages {
         padding: 20px;
         background-color: $chat-block;
-        height: 100%;
         display: flex;
         flex-direction: column;
         &.reverce
@@ -26,6 +30,7 @@
         }
     }
 
+    
     .reciever {
         padding: 0 0 20px 20px;
         display: flex;

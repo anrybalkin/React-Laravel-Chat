@@ -5,7 +5,6 @@ import {addCurrentUser} from "../features/currentUserStorage";
 import store from "../features/reduxstore";
 import {add_cookie} from "../features/lib";
 
-
 class Login extends React.Component {
 
     constructor(props)
@@ -27,29 +26,31 @@ class Login extends React.Component {
         this.SingUp = this
             .SingUp
             .bind(this);
+        this.statusChangeCallback = this
+            .statusChangeCallback
+            .bind(this);
     }
 
-    statusChangeCallback(response) {
-        switch(response.status)
-        {
-            case "connected":
-                console.log(response.signedRequest);
-                add_cookie({username: "fb", logged: true, activeChat: ""});
-                break;
-            case "not_authorized":
-                break;
-            default:
-                break;
-        }
+
+
+statusChangeCallback(response) {
+    switch (response.status) {
+        case "connected":
+            console.log(response.signedRequest);
+            add_cookie({username: "fb", logged: true, activeChat: ""});
+            break;
+        case "not_authorized":
+            break;
+        default:
+           break; }
     }
 
     componentDidMount()
     {
         FB
             .getLoginStatus(function (response) {
-                statusChangeCallback(response);
+                this.statusChangeCallback(response);
             });
-            checkGmail()
     }
     Login(e)
     {
@@ -66,7 +67,14 @@ class Login extends React.Component {
                 add_cookie({username: this.state.login, logged: true, activeChat: ""});
                 store.dispatch(logIn(this.state.login))
 
-                store.dispatch(addCurrentUser({avatar: "", firstName: "", lastName: "", chatActive: "", userName: this.state.login,integration:""}))
+                store.dispatch(addCurrentUser({
+                    avatar: "",
+                    firstName: "",
+                    lastName: "",
+                    chatActive: "",
+                    userName: this.state.login,
+                    integration: ""
+                }))
 
                 setTimeout(() => {
                     window.location.href = window
@@ -78,16 +86,20 @@ class Login extends React.Component {
         }
     }
 
-    checkLoginState() {               // Called when a person is finished with the Login Button.
-        FB.getLoginStatus(function(response) {   // See the onlogin handler
-          statusChangeCallback(response);
-        });
-      }
+    checkLoginState() {
+        // Called when a person is finished with the Login Button.
+        FB
+            .getLoginStatus(function (response) { // See the onlogin handler
+                this.statusChangeCallback(response);
+            });
+    }
 
     SingUp(e)
     {
         e.preventDefault();
-        if ((this.state.login != "" || this.state.login.length > 3) && (this.state.pass != "" || this.state.pass.length > 3)) {
+        if((this.state.login != "" || this.state.login.length > 3) && (this.state.pass != "" || this.state.pass.length > 3))
+        {
+        if (store.getState().userData.user.every(el=>{return el.username==this.state.login})!==true) {
 
             add_cookie({username: this.state.login, logged: true, activeChat: ""});
             /*fetch("http://"+window.location.host+"/addUser", {
@@ -118,11 +130,18 @@ class Login extends React.Component {
                 password: window.btoa(this.state.pass),
                 config: {
                     activeChat: "",
-                    integration:""
+                    integration: ""
                 }
             }))
 
-            store.dispatch(addCurrentUser({avatar: "", firstName: "", lastName: "", chatActive: "", userName: this.state.login,integration:""}))
+            store.dispatch(addCurrentUser({
+                avatar: "",
+                firstName: "",
+                lastName: "",
+                chatActive: "",
+                userName: this.state.login,
+                integration: ""
+            }))
 
             initChat(this.state.login);
 
@@ -133,6 +152,11 @@ class Login extends React.Component {
                     .replace("login", "chat")
             }, 1000)
         }
+        else
+        {
+            document.querySelector(".error").innerHTML="User already exist. Please login."
+        }
+    }
 
     }
     handlerChangeLogin(e)
@@ -177,7 +201,13 @@ class Login extends React.Component {
                     <button className="login-button" onClick={this.SingUp}>Sign In</button>
                 </div>
                 <div className="login-buttons">
-                    <div className="fb-login-button" data-size="medium" data-auto-logout-link="true" data-onlogin={()=>{this.checkLoginState()}}></div>
+                    <div
+                        className="fb-login-button"
+                        data-size="medium"
+                        data-auto-logout-link="true"
+                        data-onlogin={() => {
+                        this.checkLoginState()
+                    }}></div>
 
                 </div>
             </form>

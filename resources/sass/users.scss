@@ -2,12 +2,14 @@
 .users {
     background-color: $chat-block;
     position: relative;
+    height: 100%;
     &-container {
         width: 30%;
+        
         border-right: 1px solid $splitter;
     }
     &-block {
-        height: calc(100% - 60px);
+        height: calc(90% - 70px);
         background-color: $chat-block;
         overflow: hidden;
         padding-left: 20px;
@@ -19,7 +21,6 @@
         padding-bottom: 40px;
         padding-top: 20px;
     }
-    height: calc(100% - 60px);
     .user {
  
         display: flex;

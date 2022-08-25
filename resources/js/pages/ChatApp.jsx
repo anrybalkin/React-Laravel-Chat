@@ -5,17 +5,9 @@ import Search from '../components/Search';
 import Profile from '../components/Profile';
 
 class ChatApp extends React.Component {
-
-    componentDidMount() {
-        document
-            .getElementById("app")
-            .style
-            .Height = window.innerHeight + "px";
-    }
-
     render()
     {
-        return <div className="chatapp-container">
+        return <div className="chatapp-container" style={{height:`${window.innerHeight}px`}}>
             <aside className='users-container'>
                 <Profile/>
                 <Search/>

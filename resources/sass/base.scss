@@ -22,6 +22,8 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: $chat-block;
+    overflow: hidden;
 }
 
 #app {
@@ -46,9 +48,11 @@ html {
 
 .splitter
 {
-    background-color:$splitter;
+    background-color: $chat-block;
     margin: 0;
     padding: 0;
+    border: 1px solid $splitter;
+
 }
 
 .custom-scrollbars__content {

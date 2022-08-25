@@ -2,6 +2,7 @@ import React from "react";
 import User from "./User";
 import store from "../features/reduxstore"
 import {connect} from 'react-redux';
+import CustomScroll from "./CustomScroll";
 
 const mapStateToProps = (state) => ({userData: state.userData.user, message: state.messages.message})
 
@@ -12,33 +13,29 @@ class Users extends React.Component
     {
         super(props);
         this.state = {}
+        this.resize=this.resize.bind(this);
     }
 
     resize()
     {
-        document
-            .querySelector(".users-container")
-            .style
-            .maxHeight = (window.innerHeight - 230) + "px"
+        document.querySelector(".chatapp-container").style.heigth=window.innerHeight+"px";
     }
 
     componentDidMount()
     {
+        this.resize();
         window.addEventListener("resize", this.resize())
-        store.subscribe(()=>{
-            console.log("render",store
-            .getState()
-            .messages
-            .message[store
-                .getState()
-                .messages
-                .message.length-1])
+        store.subscribe(() => {
             this.render()
         })
     }
+    componentDidUpdate()
+    {
+        this.resize();
+    }
     render()
     {
-        
+
         let currentUser = store
             .getState()
             .currentUserStorage
@@ -63,7 +60,6 @@ class Users extends React.Component
             .getState()
             .userData
             .user;
-            console.log(messages);
         const renderedListItems = messages.map(el => {
             let user;
             users.forEach(element => {
@@ -73,17 +69,15 @@ class Users extends React.Component
 
             })
             if (user != undefined) {
-                return <User key={user.username}  props={user}/>
+                return <User key={user.username} props={user}/>
             }
 
         })
         return <div className="users-block">
             <h2 className="users-title">Chats</h2>
-            <div className="users">
-
-                {renderedListItems}
-
-            </div>
+            <CustomScroll className={"users"} key={window.performance.now()}>
+                    {renderedListItems}
+                </CustomScroll>
         </div>
     }
 }

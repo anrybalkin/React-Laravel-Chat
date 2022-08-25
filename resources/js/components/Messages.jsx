@@ -3,6 +3,7 @@ import store from "../features/reduxstore";
 import Message from "./Message"
 import {connect} from 'react-redux';
 import {getUserFromUsername} from "../features/lib";
+import CustomScroll from "./CustomScroll";
 
 const mapStateToProps = (state) => ({message: state.messages.message, currentUserStorage: state.currentUserStorage})
 
@@ -22,17 +23,15 @@ class Messages extends React.Component
                 .currentUserStorage
                 .userName
         }
+        this.resize=this.resize.bind(this);
     }
     resize()
     {
-        document
-            .querySelector(".chat-block")
-            .style
-            .Height = window.innerHeight-document.querySelector(".chat-block").offsetTop + "px"
+        document.querySelector(".chat-block").style.heigth=window.innerHeight+"px";
     }
-
     componentDidMount()
     {
+        this.resize();
         window.addEventListener("resize", this.resize())
         store.subscribe(() => {
             this.setState({
@@ -45,6 +44,10 @@ class Messages extends React.Component
         });
     }
 
+    componentDidUpdate()
+    {
+        this.resize();
+    }
     render()
     {
         if (store.getState().messages.message.filter(el => {
@@ -87,9 +90,9 @@ class Messages extends React.Component
 
                 })
 
-            return <div className="messages">
+            return <CustomScroll className={"messages"} key={window.performance.now()} >
                 {renderedListItems}            
-            </div>
+            </CustomScroll>
         } else {
             return <div className="messages reverce">
                 <span className="no-msg">type something</span>

@@ -4,6 +4,29 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    &-logut
+    {
+        background-color: #fff;
+        color: black;
+        border:none;
+        outline: none;
+        transition: all 1 ease-in-out;
+        padding: 20px;
+        border-radius: 20px;
+        -webkit-box-shadow: 0 0 5px 0 rgba(226,226,226,255);
+        -moz-box-shadow: 0 0 5px 0 rgba(226,226,226,255);
+        box-shadow: 0 0 5px 0 rgba(226,226,226,255);
+        cursor: pointer;
+    }
+    &-logut:hover
+    {
+        background-color: rgb(224, 68, 68);
+        -webkit-box-shadow: 0 0 5px 0 rgba(224, 68, 68,255);
+        -moz-box-shadow: 0 0 5px 0 rgba(224, 68, 68,255);
+        box-shadow: 0 0 5px 0 rgba(224, 68, 68,255);
+        color: #fff;
+        transition: all 1 ease-in-out;
+    }
 }
 .search {
     &-input {
@@ -12,8 +35,9 @@
     }
     &-panel {
         position: relative;
-        width: 90%;
+        width: 80%;
         padding: 20px 20px 20px 5px;
+        margin: 0 auto;
     }
     &-submit {
         position: absolute;
