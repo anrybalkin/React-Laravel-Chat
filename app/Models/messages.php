@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class messages extends Model
 {
-    public $incrementing = true;
-    protected $datatable="";
-    protected $fillable = [
-        'id',
-        'chatID',
-        'username',
-        'text'
-    ];
-    public function addMessage()
-    {
-        
-    }
+   /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'messages';
+    protected $primaryKey = 'messages_id';
+
+    protected $attributes = [
+      'chatID' => '',
+      'username'=>'',
+      'text'=>'',
+  ];
 }

@@ -5,6 +5,7 @@ import {addMessage} from "./messageStore";
 import {addUser} from "./usersStore";
 import {generateUID} from "./lib";
 import presistedDataMsg from "../../data/messages.json"
+import { Add_User } from "../api/User";
 
 export function initUsers(userName = "") {
     localStorage.setItem("init", "true")
@@ -36,15 +37,14 @@ export function initUsers(userName = "") {
                 .internet
                 .userName(fName, lName),
             password: window.btoa("faker.internet.password()"),
-            config: {
-                activeChat: "",
-                integration:""
-            }
+            integrationID:"",
+            integrationName:"",
+            email:faker.internet.email()
         }
         let UID = generateUID();
         users.push(user);
         ids.push(UID)
-        store.dispatch(addUser(user))
+        Add_User(user);
         store.dispatch(addChat({
             chatID: UID,
             chatName: user.firstName + " " + user.lastName,
@@ -98,7 +98,7 @@ export function initChat(userName) {
             if (el.username !== userName) {
                 store.dispatch(addChat({
                     chatID: UID,
-                    chatName: el.firstName + " " + el.lastName,
+                    chatName: el.firstName===""?el.username:el.firstName + " " + el.lastName,
                     members: [el.username, userName]
                 }))
                 initMsg({"ids": [UID], "users": [el]})

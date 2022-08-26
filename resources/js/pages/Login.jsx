@@ -80,6 +80,9 @@ class Login extends React.Component {
         e.preventDefault();
         FB.login(function(response) {
             if (response.status === 'connected') {
+                
+                FB.api('/me', function(response) {console.log(response); })
+                
               // Logged into your webpage and Facebook.
             } else {
               // The person is not logged into your webpage or we are unable to tell. 
@@ -128,27 +131,7 @@ class Login extends React.Component {
             if (store.getState().userData.user.every(el => {
                 return el.username == this.state.login
             }) !== true) {
-
                 add_cookie("loggedReact",{username: this.state.login, logged: true, activeChat: ""});
-                /*fetch("http://"+window.location.host+"/addUser", {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer',
-                body: JSON.stringify({
-                    avatar: "",
-                    firstName: "",
-                    lastName: "",
-                    status: "online",
-                    username: this.state.login,
-                    password: window.btoa(this.state.pass),
-                    })
-              }).then(response=>{return response.json()}).then(response=>{console.log(response)});*/
                 store.dispatch(addUser({
                     avatar: "",
                     firstName: "",

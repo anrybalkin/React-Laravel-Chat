@@ -17,14 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    public $incrementing = false;
     protected $fillable = [
-        'username',
-        'avatar',
+        'name',
+        'email',
         'password',
-        'firstName',
-        'lastName',
-        'status',
     ];
 
     /**
@@ -46,4 +42,3 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 }
-
