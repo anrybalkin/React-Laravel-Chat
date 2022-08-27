@@ -3,8 +3,6 @@ import ChatApp from "./pages/ChatApp";
 import Login from "./pages/Login";
 import {isAuth} from './features/auth';
 
-
-
 function App() {
     return (
         <BrowserRouter>

@@ -78,6 +78,7 @@ class User extends React.Component
                 return false;
             }
         })[0].chatID);
+        console.log(lastMessage);
         let lastText = lastMessage !== ""
             ? lastMessage.text
             : "";

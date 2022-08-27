@@ -13,5 +13,16 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+<<<<<<< Updated upstream
+=======
+        "users",
+        "users/*",
+        "message",
+        "message/*",
+        "chat",
+        "chat/*",
+        "user",
+        "user/*"
+>>>>>>> Stashed changes
     ];
 }

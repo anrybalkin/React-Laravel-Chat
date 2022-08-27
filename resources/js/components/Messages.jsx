@@ -65,7 +65,7 @@ class Messages extends React.Component
                     if (el === undefined) {
                         return false;
                     }
-                    let avatar = this.state.userName !== el.username
+                    let avatar =el.username !==this.state.userName
                         ? getUserFromUsername(el.username)
                         : {}
                     avatar = avatar !== undefined

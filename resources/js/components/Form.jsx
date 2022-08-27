@@ -3,6 +3,7 @@ import store from "../features/reduxstore"
 import {connect} from 'react-redux';
 import {addMessage} from '../features/messageStore'
 import {FindAntoherUser, generateUID, notifyMe} from "../features/lib";
+import { _SendMessage } from "../api/Message";
 
 const mapStateToProps = (state) => ({currentUserStorage: state.currentUserStorage})
 
@@ -71,27 +72,20 @@ class SendMessage extends React.Component
                 date: Date.now(),
                 username: this.state.user,
                 chatID: this.state.activeChat
-            }))
+            }));
+
+            _SendMessage({
+                text: this.state.value,
+                date: Date.now(),
+                username: this.state.user,
+                chatID: this.state.activeChat
+            });
+
+
             this.setState({value: ""})
         }
-        //var triggered = channel.trigger("client-newMsg", this.state.value);
-        let user = FindAntoherUser(this.state.activeChat, this.state.user);
-        let chatID = this.state.activeChat;
-        setTimeout(() => {
-            fetch("https://api.chucknorris.io/jokes/random").then((respond) => {
-                return respond.json()
-            }).then(data => {
-
-                store.dispatch(addMessage({
-                    id: generateUID(),
-                    text: data.value,
-                    date: Date.now(),
-                    username: user.username,
-                    chatID: chatID
-                }))
-                notifyMe("New message from " + user.username);
-            })
-        }, Math.random() * 10000);
+        
+        
     }
 
     handleChange(event)

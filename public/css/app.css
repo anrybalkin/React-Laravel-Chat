@@ -472,7 +472,6 @@ html {
   display: flex;
   gap: 10px;
   align-items: center;
-  justify-content: end;
 }
 .chatapp-container .message-area {
   padding: 10px 10px 0;

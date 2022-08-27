@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 const persistConfig = {
     key: 'chatState',
-    storage
+    storage,
 }
 export const comreducer = combineReducers({chats: chatStorage, userData: usersStorage, messages: messageStore,currentUserStorage})
 const persistedReducer = persistReducer(persistConfig, comreducer)
@@ -23,4 +23,4 @@ const store = configureStore({
 
 export default store;
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store,)

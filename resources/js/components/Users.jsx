@@ -13,12 +13,18 @@ class Users extends React.Component
     {
         super(props);
         this.state = {}
-        this.resize=this.resize.bind(this);
+        this.resize = this
+            .resize
+            .bind(this);
+
     }
 
     resize()
     {
-        document.querySelector(".chatapp-container").style.heigth=window.innerHeight+"px";
+        document
+            .querySelector(".chatapp-container")
+            .style
+            .heigth = window.innerHeight + "px";
     }
 
     componentDidMount()
@@ -35,7 +41,6 @@ class Users extends React.Component
     }
     render()
     {
-
         let currentUser = store
             .getState()
             .currentUserStorage
@@ -47,37 +52,83 @@ class Users extends React.Component
             .getState()
             .messages
             .message;
-
-        for (let i = tmp.length - 1; i >= 0; i--) {
-            if (tmp[i].username !== currentUser) {
-                if (JSON.stringify(messages).indexOf(tmp[i].username) === -1) {
-                    messages.push(tmp[i].username);
+            let renderedListItems={};
+        if(tmp.length!=0)
+        {
+            for (let i = tmp.length - 1; i >= 0; i--) {
+                if (tmp[i].username !== currentUser) {
+                    if (JSON.stringify(messages).indexOf(tmp[i].username) === -1) {
+                        messages.push(tmp[i].username);
+                    }
+                } else {
+                    let user = store
+                        .getState()
+                        .chats
+                        .chat
+                        .filter(el => {
+                            return el.chatID == tmp[i].chatID
+                        });
+                    let username=user[0].members.filter(el=>{return el!==currentUser})[0];
+                    if (JSON.stringify(messages).indexOf(username) === -1) {
+                        messages.push(username);
+                    }
                 }
             }
-        }
-
-        let users = store
-            .getState()
-            .userData
-            .user;
-        const renderedListItems = messages.map(el => {
-            let user;
-            users.forEach(element => {
-                if (element.username === el) {
-                    user = element;
+    
+            let users = store
+                .getState()
+                .userData
+                .user;
+                renderedListItems = messages.map(el => {
+                let user;
+                users.forEach(element => {
+                    if (element.username === el) {
+                        user = element;
+                    }
+                })
+                if (user != undefined) {
+                    return <User
+                        touch={window.innerWidth < 1000
+                        ? true
+                        : false}
+                        key={user.username}
+                        props={user}/>
                 }
-
+    
             })
+        }
+        else
+        {
+            renderedListItems = store.getState().userData.user.map(user => {
+
+                if (user != undefined) {
+                    return <User
+                        touch={window.innerWidth < 1000
+                        ? true
+                        : false}
+                        key={user.username}
+                        props={user}/>
+                }
+    
+            })
+<<<<<<< Updated upstream
             if (user != undefined) {
                 return <User key={user.username} props={user}/>
             }
 
         })
+=======
+        }
+>>>>>>> Stashed changes
         return <div className="users-block">
             <h2 className="users-title">Chats</h2>
-            <CustomScroll className={"users"} key={window.performance.now()}>
-                    {renderedListItems}
-                </CustomScroll>
+            <CustomScroll
+                className={"users"}
+                key={window
+                .performance
+                .now()}>
+                {renderedListItems}
+            </CustomScroll>
         </div>
     }
 }
