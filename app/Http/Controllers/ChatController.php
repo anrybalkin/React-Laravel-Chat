@@ -9,7 +9,7 @@ use App\Models\users;
 use Illuminate\Http\Response;
 use App\Models\messages;
 
-class Chat extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,8 @@ class Chat extends Controller
         $chat= new chats();
         $chat->chatID=$data['chatID'];
         $chat->chatName=$data['chatName'];
-        $chat->members=$data['members'];
+        $chat->member1=$data['member1'];
+        $chat->member2=$data['member2'];
         $chat->save();
 
     }
@@ -47,26 +48,38 @@ class Chat extends Controller
     public function createChat(Request $request)
     {
         $faker=Faker::create();
-foreach(users::all() as $user)
+        foreach(users::all() as $user)
         {
-        $chat= new chats();
-        $chat->chatID=chats::max("id")!==null?chats::max("id"):0;
-        $chat->chatName=$request->json()->get('chatName');
-        $chat->members=json_encode([$user->username,$request->json()->get('username')]);
-        $chat->save();
-
-        messages::create([
-            "chatID"=>$chat->chatID,
-            "text"=>$faker->text(128),
-            "username"=>$user->username
-        ]);
-        messages::create([
-            "chatID"=>$chat->chatID,
-            "text"=>$faker->text(128),
-            "username"=>$request->json()->get('username')
-        ]);
+        $chatID=chats::count("id")!==null?chats::count("id"):0;  
+        $username=json_decode(json_encode($user));
+        if($username->id!==$request->json()->get('user_id'))
+        {
+            $data1=[
+                "chatID"=>$chatID,
+                "text"=>$faker->text(128),
+                "user_id"=>$username->id,
+                "username"=>$username->username
+            ];
+    
+            $data2=[
+                "chatID"=>$chatID,
+                "text"=>$faker->text(128),
+                "username"=>$request->json()->get('username'),
+                "user_id"=>$request->json()->get('user_id')
+            ];
+    
+            $chat= new chats();
+            $chat->chatID=$chatID;
+            $chat->chatName=$username->firstName!=""&&$username->lastName!=""?$username->firstName." ".$username->lastName:$username->username;
+            $chat->member1=$username->id;
+            $chat->member2=$request->json()->get('user_id');
+            $chat->save();
+    
+            messages::create($data1);
+            messages::create($data2);
+        }
 }
-return new Response("Ok",200);
+return new Response(json_encode(["status"=>"ok"]),200);
     }
 
     /**
@@ -91,9 +104,15 @@ return new Response("Ok",200);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function getChats(Request $request)
     {
-        //
+        if($request->json()->get("user_id")!=null)
+        {
+            $data=chats::where("member1",$request->json()->get("user_id"))->orWhere("member2",$request->json()->get("user_id"))->get();
+            
+            return new Response(json_encode($data),200);
+        }
+        return new Response(json_encode(["status"=>"error","error"=>"Not correct data"]),200);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\users;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\chats;
 
 class UserController extends Controller
 {
@@ -51,8 +52,10 @@ class UserController extends Controller
      */
     public function addUser(Request $request)
     {
-        if(!$request->json())
-        {$user= new users();
+        if($request->json()!="")
+        {
+            
+            $user= new users();
         $user->firstName=$request->json()->get('firstName');
         $user->lastName=$request->json()->get('lastName');
         $user->username=$request->json()->get('username');
@@ -64,7 +67,7 @@ class UserController extends Controller
         $user->email=$request->json()->get('email');
         $user->save();
         
-        return new Response(json_encode(['status' => "created"]),200);
+        return new Response(json_encode(['status' => "created","user_id"=>$user->id]),200);
     }
         else{
             return new Response(json_encode(['status' => "error","error"=>"no data"]),200);
@@ -90,6 +93,7 @@ class UserController extends Controller
 
     public function getUsers(Request $request)
     {
+        
         $at=$request->json()->get("at");
         $to=$request->json()->get("to");
 
@@ -122,12 +126,68 @@ class UserController extends Controller
 
 }
 
-public function searchUser(Request $request)
+public function login(Request $request)
 {
-    $get=str_replace("http://".$request->host()."/searchUser"."/","",$request->url());
-    $data=[explode("=",$get)[0]=>explode("=",$get)[1]];
-    return users::where("username","LIKE",'%'.htmlspecialchars($data["query"]).'%')->get();;
+    if($request->json()->get("login")!==""&&($request->json()->get("pass")!==""||($request->json()->get("integrationID")!==""&&$request->json()->get("integrationName")!=="")))
+    {
+        $user="";
+        if($request->json()->get("integrationID")==""&&$request->json()->get("integrationName")=="")
+        {
+            $user=users::where("username",$request->json()->get("login"))->where("password",$request->json()->get("pass"))->limit(1)->get();
+           
+        }
+        else{
+            $user=users::where("username",$request->json()->get("login"))->where("integrationID",$request->json()->get("integrationID"))->where("integrationName",$request->json()->get("integrationName"))->limit(1)->get();
+        }
+       
+        if(count($user)>0)
+        {   
+            $userC=users::find($user[0]->id);
+            $userC->status="online";
+            $userC->save();
+            return new Response(["status"=>"success","user_data"=>[
+                "avatar"=>$user[0]->avatar,
+            "firstName"=>$user[0]->firstName,
+            "user_id"=>$user[0]->id,
+            "integrationName"=>$user[0]->integrationName,
+            "lastName"=>$user[0]->lastName,
+            "status"=>$user[0]->status,
+            "username"=>$user[0]->username,
+            "integrationID"=>$user[0]->integrationID]
+        ],200);
+        }
+
+        return new Response(["status"=>"error","error"=>"There is no this user registred"],200);
+    }
 }
+
+public function searchUser(Request $request)
+    {
+        if($request->search!==""&&$request->user_id!=="")
+        {
+            $data=users::where("username","LIKE",'%'.$request->json()->get("search").'%')
+            ->orWhere("firstName","LIKE",'%'.$request->json()->get("search").'%')->orWhere("lastName","LIKE",'%'.$request->json()->get("search").'%')->get();
+            $result=[];
+            if(count($data)>0)
+            {
+                foreach($data as $el)
+                {
+                    if($el->id!=null)
+                    {
+                        $chat=chats::where("member1",$el->id)->where("member2",$request->user_id)->orWhere("member1",$request->user_id)->where("member2",$el->id)->get()->first();
+                        if($chat!=null)
+                        {
+                            array_push($result,["avatar"=>$el->avatar,"username"=>$el->username,"firstName"=>$el->firstName,"lastName"=>$el->lastName,"user_id"=>$el->id,"chatID"=>$chat->chatID]);
+                        }
+                    }
+                    
+                }
+            }
+
+            return new Response(json_encode($result),200);
+            
+        }
+    }
 
     /**
      * Update the specified resource in storage.

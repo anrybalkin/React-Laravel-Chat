@@ -17,10 +17,10 @@ return new class extends Migration
 
             $table->increments('id');
 
-            $table->float('chatID', 255);
+            $table->integer('chatID');
             $table->string('username');
             $table->string('text');
-
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

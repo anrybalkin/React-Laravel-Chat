@@ -1,22 +1,18 @@
-import { Add2Server,GetData } from "./index";
+import {POST, GET} from "./index";
 
-export async function addChat(data)
-{
-    Add2Server("http://"+window.location.hostname+"/addChat",data).then((data) => {
-        console.log(data);
-      });;
+export async function createChat(data) {
+    return await POST(window.location.origin + "/chat", data).then((data) => {});
 }
 
-export async function searchMemers(data)
-{
-    GetData("http://"+window.location.hostname+"/searchMemers",data).then((data) => {
-        console.log(data);
-      });
+export async function searchMemers(data) {
+    return await GET(window.location.origin + "/searchMemers", data).then((data) => {
+        return data;
+    });
 }
 
-export async function changeStatus(data)
-{
-    Add2Server("http://"+window.location.hostname+"/user-"+data.id,data).then((data) => {
-        console.log(data);
-      });
+export async function getChats(data) {
+    return await POST(window.location.origin + "/chat/getChats", data).then((data) => {
+        return data;
+
+    });
 }

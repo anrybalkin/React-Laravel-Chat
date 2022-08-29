@@ -1,20 +1,10 @@
 import React from "react";
 import store from "../features/reduxstore"
 import {connect} from 'react-redux';
-import {addMessage} from '../features/messageStore'
-import {FindAntoherUser, generateUID, notifyMe} from "../features/lib";
+import { _SendMessage ,_requestMsg} from "../api/Message";
+import { addMessage } from "../features/messageStore";
 
 const mapStateToProps = (state) => ({currentUserStorage: state.currentUserStorage})
-
-/*window.Pusher = require('pusher-js');
-Pusher.logToConsole = true;
-
-var pusher = new Pusher('77978b6a5e88e1257e34', {cluster: 'eu'});*/
-
-/*var channel = pusher.subscribe('private-chat',{ channelAuthorization: { endpoint: "/pusher_auth.php"}});
-channel.bind('recentMsg', function(data) {
-            console.log(data);
-          });*/
 
 class SendMessage extends React.Component
 {
@@ -26,12 +16,9 @@ class SendMessage extends React.Component
             user: store
                 .getState()
                 .currentUserStorage
-                .userName,
-            activeChat: store
-                .getState()
-                .currentUserStorage
-                .chatActive
-                .toString()
+                
+
+                
         };
 
         this.handleChange = this
@@ -45,53 +32,41 @@ class SendMessage extends React.Component
     componentDidMount()
     {
         store.subscribe(() => {
-            if (this.state.activeChat !== store.getState().currentUserStorage.chatActive.toString()) {
+            if (this.state.activeChat !== store.getState().currentUserStorage.chatActive) {
                 this.setState({
                     user: store
-                        .getState()
-                        .currentUserStorage
-                        .userName,
-                    activeChat: store
-                        .getState()
-                        .currentUserStorage
-                        .chatActive
-                        .toString()
+                .getState()
+                .currentUserStorage
                 })
             }
         })
     }
 
-    handleSubmit(event)
+   handleSubmit(event)
     {
         event.preventDefault();
         if (this.state.value !== "" && this.state.value !== undefined) {
             store.dispatch(addMessage({
-                id: generateUID(),
                 text: this.state.value,
                 date: Date.now(),
-                username: this.state.user,
-                chatID: this.state.activeChat
+                username: this.state.user.userName,
+                user_id:this.state.user.user_id,
+                chatID: this.state.user.chatActive,
+                id: Math.floor(window.performance.now()+Date.now())+this.state.user.userName,
             }))
+            _SendMessage({
+                text: this.state.value,
+                date: Date.now(),
+                username: this.state.user.userName,
+                user_id:this.state.user.user_id,
+                chatID: this.state.user.chatActive,
+            });
+            
             this.setState({value: ""})
+            _requestMsg({chatID: this.state.user.chatActive,user_id:this.state.user.user_id,})
         }
-        //var triggered = channel.trigger("client-newMsg", this.state.value);
-        let user = FindAntoherUser(this.state.activeChat, this.state.user);
-        let chatID = this.state.activeChat;
-        setTimeout(() => {
-            fetch("https://api.chucknorris.io/jokes/random").then((respond) => {
-                return respond.json()
-            }).then(data => {
-
-                store.dispatch(addMessage({
-                    id: generateUID(),
-                    text: data.value,
-                    date: Date.now(),
-                    username: user.username,
-                    chatID: chatID
-                }))
-                notifyMe("New message from " + user.username);
-            })
-        }, Math.random() * 10000);
+        
+        
     }
 
     handleChange(event)

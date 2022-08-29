@@ -8,7 +8,9 @@ export const currentUserStorage=createSlice({
         avatar:"",
         lastName:"",
         firstName:"",
-        integration:""
+        integrationName:"",
+        integrationID:"",
+        user_id:""
     },
     reducers: {
         addCurrentUser:(state,action)=>{
@@ -17,18 +19,23 @@ export const currentUserStorage=createSlice({
           state.avatar=action.payload.avatar;
           state.lastName=action.payload.lastName;
           state.firstName=action.payload.firstName;
-          state.firstName=action.payload.integration;
+          state.integrationName=action.payload.integrationName;
+          state.integrationID=action.payload.integrationID;
+          state.user_id=action.payload.user_id;
         },
         changeChat:(state,action)=>
         {
             state.chatActive=action.payload.activeChat;
+        },
+        setUserID:(state,action)=>
+        {
+            state.user_id=action.payload;
         }
-        
 
 }}
 
 )
 
-export const { addCurrentUser,changeChat } = currentUserStorage.actions
+export const { addCurrentUser,changeChat,setUserID } = currentUserStorage.actions
 
 export default currentUserStorage.reducer;

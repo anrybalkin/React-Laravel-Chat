@@ -15,25 +15,8 @@ import App from './Application';
 import store, {persistor} from './features/reduxstore'
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux'
-import {initMsg, initUsers} from './features/initstore';
-import {addUser} from './features/usersStore';
 
-if (localStorage.getItem("init") == null) {
-    localStorage.setItem("init", "true");
-    store.dispatch(addUser({
-        avatar: "",
-        firstName: "",
-        lastName: "",
-        status: "online",
-        username: "admin",
-        password: window.btoa("admin"),
-        integrationID: "",
-        integrationName: "",
-        email: ""
-    }))
-    let data = initUsers("admin");
-    initMsg(data, "admin");
-}
+    
 
 ReactDOM.render(
     <React.StrictMode>

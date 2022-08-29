@@ -13,11 +13,18 @@ class chats extends Model
      * @var string
      */
     protected $table = 'chats';
-    protected $primaryKey = 'chats_id';
+    protected $primaryKey = 'id';
 
+    protected $fillable =['chatID',
+    'chatName',
+    'members1',"members2"];
     protected $attributes = [
         'chatID' => '',
         'chatName'=>'',
-        'members'=>''
+        'member1'=>'',
+        'member2'=>'',
+    ];
+    protected $casts = [
+        'closed_date' => 'timestamp',
     ];
 }

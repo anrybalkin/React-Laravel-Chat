@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('chatID');
+            $table->integer('chatID');
             $table->string('chatName');
-            $table->json('members');
+            $table->integer('member1');
+            $table->integer('member2');
 
             $table->timestamps();
         });

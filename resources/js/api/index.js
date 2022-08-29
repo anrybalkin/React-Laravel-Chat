@@ -1,6 +1,5 @@
-export async function Add2Server(url = '', data = {}) {
+export async function POST(url = '', data = {}) {
 
-  console.log(data);
 
     const response = await fetch(url, {
       method: 'POST', 
@@ -17,7 +16,7 @@ export async function Add2Server(url = '', data = {}) {
     return await response.json();
   }
 
-  export async function GetData(url = '', data = {}) {
+  export async function GET(url = '') {
 
     const response = await fetch(url, {
       method: 'GET', 
@@ -29,7 +28,6 @@ export async function Add2Server(url = '', data = {}) {
       },
       redirect: 'follow', 
       referrerPolicy: 'no-referrer', 
-      body: data
     });
     return await response.json();
   }

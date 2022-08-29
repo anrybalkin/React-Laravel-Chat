@@ -6,11 +6,10 @@ class CustomScroll extends React.Component
 {
     constructor(props)
     {
-
         super(props);
         this.state = {
-            onScrollUp: props.onScrolUp,
-            onScrollDown: props.onScrolDown,
+            onScrollUpCall: props.onScrollUp,
+            onScrollDownCall: props.onScrollDown,
             children: props.children,
             className: props.className,
             prevPostion: 0,
@@ -34,18 +33,10 @@ class CustomScroll extends React.Component
             .onHandleEnd
             .bind(this);
 
-        if (this.state.onScrollDown != undefined && typeof(this.state.onScrollDown) == "function") {
-            this.state.onScrollDown = this
-                .state
-                .onScrollDown
-                .bind(this)
-        }
-        if (this.state.onScrollUp != undefined && typeof(this.state.onScrollUp) == "function") {
-            this.state.onScrollUp = this
-                .state
-                .onScrollUp
-                .bind(this)
-        }
+        this.onScrollUp = this.onScrollUp.bind(this)
+
+        
+        
     }
 
     onHandleMove(evt) {
@@ -77,6 +68,19 @@ class CustomScroll extends React.Component
         document.addEventListener("touchstart", this.onHandleStart,false);
         document.addEventListener("touchend", this.onHandleEnd,false);
         document.addEventListener("touchmove", this.onHandleMove,false);
+        if(typeof(this.state.onScrollUpCall) == "function")
+        {
+            contentRef.current.addEventListener("scroll", this.onScrollUp);
+        }
+    }
+
+    onScrollUp(e)
+    {
+        if(contentRef.current.scrollTop==0)
+        {
+            this.state.onScrollUpCall();
+        }
+
     }
 
     onHandleThumbMousedown(e) {

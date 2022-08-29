@@ -1,9 +1,10 @@
 import React from "react";
 import store from "../features/reduxstore";
 import Avatar from "./Avatar";
-import {calculateTop, lastMsg} from "../features/lib";
+import { lastMsg} from "../features/lib";
 import {changeChat} from "../features/currentUserStorage";
 import {connect} from "react-redux";
+
 
 const mapStateToProps = (state) => ({message: state.messages.message, userData: state.userData.user})
 
@@ -16,11 +17,7 @@ class User extends React.Component
         let touch = props.touch;
         props = props.props;
         this.state = {
-            username: props.username,
-            avatar: props.avatar,
-            fname: props.firstName,
-            lname: props.lastName,
-            status: props.status,
+            user: props,
             humanUser: store
                 .getState()
                 .currentUserStorage
@@ -32,6 +29,7 @@ class User extends React.Component
                 .chatActive
 
         }
+
         this.clickHandler = this
             .clickHandler
             .bind(this);
@@ -41,24 +39,9 @@ class User extends React.Component
     {
         e.preventDefault();
         store.dispatch(changeChat({
-            activeChat: store
-                .getState()
-                .chats
-                .chat
-                .filter(el => {
-                    if (el.members != undefined) {
-                        return JSON
-                            .stringify(el.members)
-                            .indexOf(this.state.username) !== -1 && JSON
-                            .stringify(el.members)
-                            .indexOf(this.state.humanUser) !== -1
-                    } else {
-                        return false;
-                    }
-
-                })[0]
-                .chatID
-        }))
+            activeChat: store.getState().chats.chat.map(el => {
+                return el.members[0]==this.state.user.id&& el.members[1]==store.getState().currentUserStorage.user_id?el.chatID:el.members[1]==this.state.user.id&& el.members[0]==store.getState().currentUserStorage.user_id?el.chatID:""
+            }).join("")}))
         if (this.state.touch) {
             document
                 .querySelector(".users-container")
@@ -73,23 +56,17 @@ class User extends React.Component
 
     render()
     {
-        let lastMessage = lastMsg(store.getState().chats.chat.filter(el => {
-            if (el.members != undefined) {
-                return JSON
-                    .stringify(el.members)
-                    .indexOf(this.state.username) !== -1 && JSON
-                    .stringify(el.members)
-                    .indexOf(this.state.humanUser) !== -1
-            } else {
-                return false;
-            }
-        })[0].chatID);
+        let lastMessage = lastMsg(store.getState().chats.chat.map(el => {
+            return el.members[0]==this.state.user.id&& el.members[1]==store.getState().currentUserStorage.user_id?el.chatID:el.members[1]==this.state.user.id&& el.members[0]==store.getState().currentUserStorage.user_id?el.chatID:""
+        }).join(""));
         let lastText = lastMessage !== ""
             ? lastMessage.text
             : "";
-            let limit=window.innerWidth<1000?40:50; 
+        let limit = window.innerWidth < 1000
+            ? 40
+            : 50;
         lastText = lastText.length > limit
-            ? lastText.substring(0, limit-3) + "..."
+            ? lastText.substring(0, limit - 3) + "..."
             : lastText;
         let lastDate = new Date(lastMessage.date).toLocaleString("en", {
             "month": "short",
@@ -100,18 +77,18 @@ class User extends React.Component
             this.clickHandler
         } > <div className="user-main-data"><Avatar
             props={{
-            username: this.state.username,
-            avatar: this.state.avatar,
-            status: this.state.status
+            username: this.state.user.username,
+            avatar: this.state.user.avatar,
+            status: this.state.user.status
         }}/>
             <div className="user-text-data">
                 <div className="user-name">
-                    {this.state.fname != "" && this.state.fname != undefined && this.state.lname != "" && this.state.lname != undefined
-                        ? <> <span>{this.state.fname}
+                    {this.state.user.firstName != "" && this.state.user.firstName != undefined && this.state.user.lastName != "" && this.state.user.lastName != undefined
+                        ? <> <span>{this.state.user.firstName}
                         </span> < span > {
-                            this.state.lname
+                            this.state.user.lastName
                         } </span></>
-                        : <> <span>{this.state.username}
+                        : <> <span>{this.state.user.username}
                         </span> </>}
                 </div>
                 {!lastMessage == false

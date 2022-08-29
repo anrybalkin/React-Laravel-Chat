@@ -13,7 +13,7 @@ class users extends Model
      * @var string
      */
     protected $table = 'users';
-    protected $primaryKey = 'users_id';
+    protected $primaryKey = 'id';
     protected $attributes = [
         'username' => '',
         'avatar'=>'',
@@ -23,7 +23,21 @@ class users extends Model
         'email'=>'',
         'status'=>'offline',
         'integrationName'=>'',
-        'integrationID'=>''
+        'integrationID'=>0
+    ];
+    protected $fillable=[
+    'username',
+    'avatar',
+    'password',
+    'firstName',
+    'lastName',
+    'email',
+    'status',
+    'integrationName',
+    'integrationID'
+];
+    protected $casts = [
+        'closed_date' => 'timestamp',
     ];
 }
 

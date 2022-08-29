@@ -12,11 +12,21 @@ class messages extends Model
      * @var string
      */
     protected $table = 'messages';
-    protected $primaryKey = 'messages_id';
+    protected $primaryKey = 'id';
 
     protected $attributes = [
       'chatID' => '',
       'username'=>'',
       'text'=>'',
+      "user_id"=>"",
   ];
+  protected $fillable =[
+    'chatID',
+    'username',
+    'text',
+    'user_id'
+  ];
+  protected $casts = [
+    'closed_date' => 'timestamp',
+];
 }

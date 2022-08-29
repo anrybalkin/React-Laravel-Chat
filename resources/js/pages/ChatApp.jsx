@@ -9,8 +9,9 @@ class ChatApp extends React.Component {
     constructor(props)
     {
         super(props)
-        this.resize=this.resize.bind(this);
-    }
+        this.resize = this
+            .resize
+            .bind(this);}
 
     toggle(e)
     {
@@ -30,20 +31,23 @@ class ChatApp extends React.Component {
         this.render()
     }
 
+
+
     componentDidMount()
     {
+
         window.addEventListener("resize", this.resize())
-        setTimeout(()=>{
-            if (window.innerWidth < 1000&&document.querySelector(".message-area")!=null) {
+        setTimeout(() => {
+            if (window.innerWidth < 1000 && document.querySelector(".message-area") != null) {
                 document
                     .querySelector(".chat-toggle")
                     .style
-                    .bottom = Math.floor(window.innerHeight - 
-                        document.querySelector(".message-area").getBoundingClientRect().y 
-                        -document.querySelector(".message-area").offsetHeight) + "px"
+                    .bottom = Math.floor(window.innerHeight - document.querySelector(".message-area").getBoundingClientRect().y - document.querySelector(".message-area").offsetHeight) + "px"
             }
-        },500)
+        }, 500)
     }
+
+
     render()
     {
         if (window.innerWidth < 1000) {

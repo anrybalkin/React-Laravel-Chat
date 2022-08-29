@@ -3,12 +3,12 @@
 .profile {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: 10px;
-    &-logut
-    {
+    &-logut {
         background-color: #fff;
         color: black;
-        border:none;
+        border: none;
         outline: none;
         transition: all 1 ease-in-out;
         padding: 20px;
@@ -18,8 +18,7 @@
         box-shadow: 0 0 5px 0 rgba(226,226,226,255);
         cursor: pointer;
     }
-    &-logut:hover
-    {
+    &-logut:hover {
         background-color: rgb(224, 68, 68);
         -webkit-box-shadow: 0 0 5px 0 rgba(224, 68, 68,255);
         -moz-box-shadow: 0 0 5px 0 rgba(224, 68, 68,255);
@@ -34,7 +33,7 @@
         padding: 10px 0 10px 40px;
         @media screen and (min-width:$mobile) {
             width: 80%!important;
-    
+
         }
         @media screen and (min-width:$tablet) {
             width: 90%!important;
@@ -58,40 +57,52 @@
         background: none;
         opacity: 0.8;
     }
-    &-result{
+    &-result {
         display: none;
         position: absolute;
-        top: 0;right: 0;
+        top: 0;
+        right: 0;
         transform: translate(15px, 60px);
         z-index: 5;
         background-color: $chat-block;
         border-radius: 10px;
         max-height: 200px;
         overflow: scroll;
+        width: 100%;
 
-    &.visible
-    {
-        display: block;
-    }
-    }
-    &-options
-    {
-        list-style: none;
-        border-radius: 10px;
+        &.visible {
+            display: block;
+        }
 
+        &-options {
+            list-style: none;
+            border-radius: 10px;
+
+        }
     }
-    &-option
-    {
+
+    &-option {
         border-bottom: 1px solid black;
         cursor: pointer;
         padding: 10px;
-
+        &.users {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        &-detail
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
     }
-    &-option:hover{
+    &-option:hover {
         background-color: #fff;
     }
-    &-yellow
-    {
+    &-yellow {
         color: yellow;
     }
 

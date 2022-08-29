@@ -13,11 +13,12 @@ class ProfileReciever extends React.Component
         super(props)
         let user = {}
         if (store.getState().currentUserStorage.chatActive !== "" && store.getState().currentUserStorage.chatActive !== undefined) {
-            user = FindAntoherUser(store.getState().currentUserStorage.chatActive, store.getState().currentUserStorage.userName)
+            user = FindAntoherUser(store.getState().currentUserStorage.chatActive, store.getState().currentUserStorage.user_id)
         }
+        console.log(user);
         this.state = {
             avatar: user.avatar,
-            userName: user.username,
+            userName: user.firstName==null||user.firstName=="null"&&user.lastName==""||user.lastName==null?user.username:user.firstName+" "+user.lastName,
             status: user.status
 
         }
@@ -25,8 +26,8 @@ class ProfileReciever extends React.Component
     }
     componentDidMount() {
         store.subscribe(() => {
-            let user = FindAntoherUser(store.getState().currentUserStorage.chatActive, store.getState().currentUserStorage.userName)
-            this.setState({avatar: user.avatar, userName: user.username, status: user.status})
+            let user = FindAntoherUser(store.getState().currentUserStorage.chatActive, store.getState().currentUserStorage.user_id)
+            this.setState({avatar: user.avatar, userName:  user.firstName==null||user.firstName=="null"&&user.lastName==""||user.lastName==null?user.username:user.firstName+" "+user.lastName, status: user.status})
         })
     }
     render()

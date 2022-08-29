@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('lastName')->nullable();
             $table->string('email')->nullable();
             $table->enum('status', ['online', 'offline']);
-            $table->string('integrationName')->nullable();
-            $table->integer('integrationID')->nullable();
+            $table->string('integrationName',64)->nullable();
+            $table->string('integrationID',64)->nullable();
 
             $table->timestamps();
             //

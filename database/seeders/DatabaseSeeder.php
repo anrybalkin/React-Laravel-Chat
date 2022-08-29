@@ -26,68 +26,80 @@ class DatabaseSeeder extends Seeder
     {
         $faker=Faker::create();
         $users=[];
-        for($i=0;$i<10;$i++)
+        for($i=1;$i<=10;$i++)
         {
+            $firstName = $faker->firstName();
+            $lastName= $faker->lastName();
+
             $faker=Faker::create();
             $data =[
             'username' => $faker->userName(),
-            'avatar' => $faker->imageUrl(100,100),
+            'avatar' => 'https://ui-avatars.com/api/?background='.strval(rand(0,9)).'D'.strval(rand(0,9)).'ABC&color=fff&name='. $firstName.'+'.$lastName.'&rounded=true',
             'password' => $faker->password(),
-            'firstName' => $faker->firstName(),
-            'lastName' => $faker->lastName(),
+            'firstName' => $firstName,
+            'lastName' => $lastName,
             'email' => $faker->email(),
             'status' => "offline",
             'integrationName' => null,
             'integrationID'=>null
         ];
-        array_push($users,["username"=>$data['username'],"fullname"=>$data['firstName']." ".$data['lastName']]);
-            users::create($data);
+        array_push($users,["id"=>$i,"username"=>$data['username'],"fullname"=>$data['firstName']." ".$data['lastName']]);
+        users::create($data);
         }
 
+        $firstName=$faker->firstName();
+        $lastName =$faker->lastName();
         $data =[
             'username' => "admin",
-            'avatar' => $faker->imageUrl(100,100),
+            'avatar' => 'https://ui-avatars.com/api/?background='.strval(rand(0,9)).'D'.strval(rand(0,9)).'ABC&color=fff&name='. $firstName.'+'.$lastName.'&rounded=true',
             'password' => "admin",
-            'firstName' => $faker->firstName(),
-            'lastName' => $faker->lastName(),
+            'firstName' => $firstName,
+            'lastName' => $lastName,
             'email' => $faker->email(),
             'status' => "offline",
             'integrationName' => null,
             'integrationID'=>null
         ];
-        array_push($users,["username"=>$data['username'],"fullname"=>$data['firstName']." ".$data['lastName']]);
 
+        
         users::create($data);
         foreach($users as $el)
         {   
+                
             $data=[
                 "chatID"=>chats::max("id")!==null?chats::max("id"):0,
                 "chatName"=>$el["fullname"],
-                "members"=>json_encode([$el['username'],"admin"])
+                "member1"=>$el['id'],
+                "member2"=>11,
             ];
             messages::create([
                 "chatID"=>$data["chatID"],
                 "text"=>$faker->text(128),
-                "username"=>$el['username']
+                "username"=>$el['username'],
+                "user_id"=>$el['id']
             ]);
             messages::create([
                 "chatID"=>$data["chatID"],
                 "text"=>$faker->text(128),
-                "username"=>"admin"
+                "username"=>"admin",
+                "user_id"=>11
             ]);
-            chats::create($data);
-        }
+            messages::create([
+                "chatID"=>$data["chatID"],
+                "text"=>$faker->text(128),
+                "username"=>$el['username'],
+                "user_id"=>$el['id']
+            ]);
+            messages::create([
+                "chatID"=>$data["chatID"],
+                "text"=>$faker->text(128),
+                "username"=>"admin",
+                "user_id"=>11
+            ]);
+            chats::create($data);}
+        
 
-    }
 
-    function uniqidReal($lenght = 13) {
-        // uniqid gives 13 chars, but you could adjust it to your needs.
-        if (function_exists("random_bytes")) {
-            $bytes = random_bytes(ceil($lenght / 2));
-        } elseif (function_exists("openssl_random_pseudo_bytes")) {
-            $bytes = openssl_random_pseudo_bytes(ceil($lenght / 2));
-        } 
-        return substr(bin2hex($bytes), 0, $lenght);
     }
 }
 

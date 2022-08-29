@@ -82,7 +82,8 @@
             .message-text {
                 background-color: $msg-to-you;
             }
-            .message-date{padding-left: 70px;
+            .message-date{
+                //padding-left: 70px;
                 padding-top: 10px;}
             
         }
@@ -91,6 +92,10 @@
             width: fit-content;
             .message-text {
                 background-color: $msg-yours;
+            }
+            .message-body
+            {
+                justify-content: flex-end;
             }
         }
         &-text {
@@ -111,7 +116,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
-            justify-content: end;
+            
         }
         &-area {
             @extend %input;
