@@ -137,7 +137,7 @@ public function login(Request $request)
            
         }
         else{
-            $user=users::where("username",$request->json()->get("login"))->where("integrationID",$request->json()->get("integrationID"))->where("integrationName",$request->json()->get("integrationName"))->limit(1)->get();
+            $user=users::where("integrationID",$request->json()->get("integrationID"))->where("integrationName",$request->json()->get("integrationName"))->limit(1)->get();
         }
        
         if(count($user)>0)
